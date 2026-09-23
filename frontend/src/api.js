@@ -1,0 +1,10 @@
+async function request(url,options={}){const r=await fetch(url,options);if(!r.ok){let msg='Request failed';try{msg=(await r.json()).detail||msg}catch{}throw new Error(msg)}return r.json()}
+export const searchProducts=q=>request(`/api/search?q=${encodeURIComponent(q)}`)
+export const addWishlist=product_id=>request('/api/wishlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product_id})})
+export const getWishlist=()=>request('/api/wishlist')
+export const createAlert=(product_id,target_price,email='')=>request('/api/alerts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product_id,target_price,email})})
+export const getAlerts=()=>request('/api/alerts')
+export const deleteAlert=id=>request(`/api/alerts/${id}`,{method:'DELETE'})
+export const getHistory=()=>request('/api/history')
+export const getProduct=id=>request(`/api/products/${id}`)
+export const getPriceHistory=id=>request(`/api/products/${id}/history`)
